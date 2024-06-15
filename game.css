@@ -27,9 +27,9 @@ body {
 
 .character {
     position: absolute;
-    bottom: 5%;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 15vw; /* Responsive width */
     max-width: 100px; /* Maximum width for large screens */
     height: auto;
