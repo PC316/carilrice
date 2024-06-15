@@ -81,7 +81,6 @@ function typeMessage(element, message) {
 
 // Copy contract address to clipboard
 document.getElementById('contract-address').addEventListener('click', function() {
-    var tempInput = document.createElement
     var tempInput = document.createElement('input');
     tempInput.value = this.textContent;
     document.body.appendChild(tempInput);
@@ -171,9 +170,6 @@ function toggleTrending() {
         homePage.style.display = 'none';
         matrixContainer.style.display = 'none';
         document.getElementById('welcome-page').style.display = 'flex';
-
-        // Hide contract address
-        document.getElementById('contract-container').style.display = 'none';
     } else {
         // Start the wiggle animation
         homeCharacter.classList.add('wiggle');
@@ -189,8 +185,5 @@ function toggleTrending() {
         colorfulBackground.style.clipPath = 'circle(100% at 50% 50%)';
         homePage.style.display = 'flex';
         matrixContainer.style.display = 'block';
-
-        // Show contract address
-        document.getElementById('contract-container').style.display = 'block';
     }
 }
