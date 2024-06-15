@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.character {
+    position: absolute;
+    bottom: 5%;
+    width: 15vw; /* Responsive width */
+    height: auto;
+    cursor: pointer; /* Add pointer cursor to indicate it's clickable */
+    z-index: 10; /* Ensure character is above all images */
+}
+
+#score, #lives {
+    font-size: 4vw; /* Responsive font size */
+    z-index: 10;
+    text-shadow: 2px 2px 0px #000;
+    padding: 2%; /* Add padding to give some distance from the window edges */
+}
+
+#score {
+    left: 2%;
+    top: 2%;
+    position: absolute;
+}
+
+#lives {
+    right: 2%;
+    top: 2%;
+    position: absolute;
+}
+
+.falling-object {
+    position: absolute;
+    width: 10vw; /* Responsive width */
+    height: 10vw; /* Responsive height to maintain aspect ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vw; /* Responsive font size */
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #000;
+    background-size: contain; /* Ensure the image fits within the container */
+    background-repeat: no-repeat; /* Ensure full visibility of the background image */
+    z-index: 5; /* Ensure objects are below the character */
+}
+
+.coin {
+    background-image: url('coin.png');
+}
+
+.scam {
+    background-image: url('scam.png');
+}
+
+.trending {
+    background-image: url('trending.png');
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+.gradient-bg {
+    background: radial-gradient(circle, rgba(255,255,0,1) 0%, rgba(255,0,0,1) 50%, rgba(128,0,128,1) 100%);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border: 2px solid white;
+    text-align: center;
+    z-index: 20;
+    text-shadow: 2px 2px 0px #000;
+    width: 80%; /* Adjust width to fit smaller screens */
+    max-width: 90%; /* Ensure menu does not exceed screen width */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    overflow: hidden; /* Prevent overflow */
+}
+
+.menu button {
+    display: block;
+    margin: 5px 0; /* Adjust margin to keep buttons within the frame */
+    padding: 10px 20px;
+    font-size: 3vw; /* Responsive font size */
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    text-shadow: none;
+    box-sizing: border-box; /* Ensure padding and border are included in the button's total width and height */
+}
+
+.menu button:hover {
+    background-color: #ddd;
+}
+
+#player-name {
+    font-size: 3vw; /* Responsive font size */
+    padding: 10px;
+    width: 100%; /* Adjust width to fit smaller screens */
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Ensure padding is included in the input's total width */
+}
+
+#leaderboard, #leaderboard-gameover, #countdown {
+    margin-top: 20px;
+}
+
+#leaderboard li, #leaderboard-gameover li {
+    list-style: none;
+    margin-bottom: 10px;
+    font-size: 3vw; /* Responsive font size */
+}
+
+#countdown {
+    margin-top: 20px;
+}
+
+/* Additional styles for the "Website" button */
+#website-button-start, #website-button {
+    display: block;
+    margin: 5px 0; /* Adjust margin to keep buttons within the frame */
+    padding: 10px 20px;
+    font-size: 3vw; /* Responsive font size */
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    text-shadow: none;
+    box-sizing: border-box; /* Ensure padding and border are included in the button's total width and height */
+}
+
+#website-button-start:hover, #website-button:hover {
+    background-color: #ddd;
+}

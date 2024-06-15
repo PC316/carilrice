@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEN TRENDING SER Game</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-menu" class="menu">
+            <h1>Enter Your Name</h1>
+            <input type="text" id="player-name" placeholder="Your Name" maxlength="10">
+            <button id="start-game-button">Start Game</button>
+            <button id="website-button-start">Website</button>
+            <button id="leaderboard-button">LEADERBOARD</button>
+            <ol id="leaderboard" style="display: none;"></ol>
+        </div>
+        <img src="character.png" id="game-character" class="character" alt="WEN TRENDING SER" style="display: none;">
+        <div id="score" style="display: none; left: 10px; top: 10px; position: absolute;">Score: 0</div>
+        <div id="lives" style="display: none; right: 10px; top: 10px; position: absolute;">Lives: 3</div>
+        <div id="game-over-menu" class="menu" style="display: none;">
+            <h1>Game Over</h1>
+            <button id="restart-button">Restart</button>
+            <button id="website-button">Website</button>
+            <h2>Leaderboard</h2>
+            <ol id="leaderboard-gameover"></ol>
+            <div id="countdown"></div>
+        </div>
+    </div>
+    <audio id="background-music" src="background-music.mp3" loop></audio>
+    <audio id="coin-sound" src="coin-sound.flac"></audio>
+    <audio id="scam-sound" src="scam-sound.wav"></audio>
+    <audio id="trending-sound" src="trending-sound.mp3"></audio>
+    <audio id="game-over-sound" src="game-over-sound.mp3"></audio>
+    <script src="game.js"></script>
+</body>
+</html>

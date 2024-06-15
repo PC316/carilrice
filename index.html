@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEN TRENDING SER</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="character-container" id="welcome-page">
+        <img src="character.png" alt="WEN TRENDING SER" class="character" id="character">
+        <button id="start-trending-button" class="button">START TRENDING</button>
+        <button id="stop-trending-button" class="button" style="display: none;" onclick="toggleTrending()">STOP TRENDING</button>
+    </div>
+    <div id="colorful-background" class="colorful-bg"></div>
+    <div id="matrix" style="display: none;"></div>
+    <audio id="audio" src="audio.mp3"></audio>
+    <audio id="background-music" src="background-music.mp3" loop></audio>
+    <div id="contract-container" style="display: none;">
+        <div id="contract-address" class="vertical-text">4Cnk9EPnW5ixfLZatCPJjDB1PUtcRpVVgTQukm9epump</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
