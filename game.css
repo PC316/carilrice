@@ -18,20 +18,24 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: black; /* Ensure initial background is black */
 }
 
 .character {
     position: absolute;
     bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 15vw; /* Responsive width */
+    max-width: 100px; /* Maximum width for large screens */
     height: auto;
     cursor: pointer; /* Add pointer cursor to indicate it's clickable */
-    z-index: 10; /* Ensure character is above all images */
+    z-index: 20; /* Ensure character is above all images */
 }
 
 #score, #lives {
     font-size: 4vw; /* Responsive font size */
-    z-index: 10;
+    z-index: 20;
     text-shadow: 2px 2px 0px #000;
     padding: 2%; /* Add padding to give some distance from the window edges */
 }
@@ -51,7 +55,9 @@ body {
 .falling-object {
     position: absolute;
     width: 10vw; /* Responsive width */
-    height: 10vw; /* Responsive height to maintain aspect ratio */
+    max-width: 50px; /* Maximum width for large screens */
+    height: 10vw; /* Maintain aspect ratio */
+    max-height: 50px; /* Maximum height for large screens */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +66,7 @@ body {
     text-shadow: 2px 2px 0px #000;
     background-size: contain; /* Ensure the image fits within the container */
     background-repeat: no-repeat; /* Ensure full visibility of the background image */
-    z-index: 5; /* Ensure objects are below the character */
+    z-index: 15; /* Ensure objects are above the gradient background */
 }
 
 .coin {
@@ -83,6 +89,13 @@ body {
 
 .gradient-bg {
     background: radial-gradient(circle, rgba(255,255,0,1) 0%, rgba(255,0,0,1) 50%, rgba(128,0,128,1) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10; /* Ensure gradient background is above the black background but below falling objects */
+    display: none; /* Hide gradient background initially */
 }
 
 .menu {
@@ -98,7 +111,7 @@ body {
     padding: 20px;
     border: 2px solid white;
     text-align: center;
-    z-index: 20;
+    z-index: 30;
     text-shadow: 2px 2px 0px #000;
     width: 80%; /* Adjust width to fit smaller screens */
     max-width: 90%; /* Ensure menu does not exceed screen width */

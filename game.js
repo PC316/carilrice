@@ -9,6 +9,7 @@ const backgroundMusic = document.getElementById('background-music');
 const coinSound = document.getElementById('coin-sound');
 const scamSound = document.getElementById('scam-sound');
 const trendingSound = document.getElementById('trending-sound');
+const spamSound = document.getElementById('spam-sound');
 const gameOverSound = document.getElementById('game-over-sound');
 const gameOverMenu = document.getElementById('game-over-menu');
 const restartButton = document.getElementById('restart-button');
@@ -18,6 +19,7 @@ const leaderboardButton = document.getElementById('leaderboard-button');
 const leaderboard = document.getElementById('leaderboard');
 const leaderboardGameover = document.getElementById('leaderboard-gameover');
 const countdown = document.getElementById('countdown');
+const gradientBg = document.querySelector('.gradient-bg');
 
 let score = 0;
 let lives = 3;
@@ -66,13 +68,14 @@ function createFallingObject(type) {
 
     const fallingObject = document.createElement('div');
     fallingObject.className = `falling-object ${type}`;
-    fallingObject.style.left = `${Math.random() * 100}%`;
+    fallingObject.style.left = `${Math.random() * (window.innerWidth - 50)}px`; // Ensure objects fall within the screen width
+    fallingObject.style.top = '-50px'; // Start above the screen
     gameContainer.appendChild(fallingObject);
 
     let fallingSpeed = (2 + Math.random() * 3) * difficultyLevel;
 
     function fall() {
-        if (parseFloat(fallingObject.style.top) >= window.innerHeight - (fallingObject.offsetHeight / 2)) {
+        if (parseFloat(fallingObject.style.top) >= window.innerHeight - 50) {
             gameContainer.removeChild(fallingObject);
         } else {
             fallingObject.style.top = `${parseFloat(fallingObject.style.top) + fallingSpeed}px`;
@@ -81,7 +84,7 @@ function createFallingObject(type) {
                     playSound(scamSound);
                     if (shieldActive) {
                         shieldActive = false;
-                        gameContainer.classList.remove('gradient-bg');
+                        gradientBg.style.display = 'none';
                         backgroundMusic.pause();
                     } else {
                         updateLives(-1);
@@ -91,8 +94,9 @@ function createFallingObject(type) {
                     updateScore(1);
                 } else if (type === 'trending') {
                     playSound(trendingSound);
+                    playSound(spamSound);
                     shieldActive = true;
-                    gameContainer.classList.add('gradient-bg');
+                    gradientBg.style.display = 'block';
                     backgroundMusic.play();
                     updateScore(5); // Bonus points for catching the trending
                     updateLives(1); // Grant a free life
@@ -104,7 +108,6 @@ function createFallingObject(type) {
         }
     }
 
-    fallingObject.style.top = '-50px';
     requestAnimationFrame(fall);
 }
 
@@ -135,33 +138,42 @@ function startDifficultyTimer() {
     setInterval(increaseDifficulty, 60000); // Increase difficulty every 1 minute
 }
 
-gameCharacter.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    dragStartX = e.clientX - gameCharacter.getBoundingClientRect().left;
-});
-
-document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        gameCharacter.style.left = `${e.clientX - dragStartX}px`;
+document.addEventListener('touchstart', (e) => {
+    if (!gameOverFlag) {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX - gameCharacter.getBoundingClientRect().left;
     }
-});
-
-document.addEventListener('mouseup', () => {
-    isDragging = false;
-});
-
-gameCharacter.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    dragStartX = e.touches[0].clientX - gameCharacter.getBoundingClientRect().left;
 });
 
 document.addEventListener('touchmove', (e) => {
     if (isDragging) {
-        gameCharacter.style.left = `${e.touches[0].clientX - dragStartX}px`;
+        const touch = e.touches[0];
+        let newLeft = touch.clientX - dragStartX;
+        newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - gameCharacter.offsetWidth)); // Ensure character stays within the screen
+        gameCharacter.style.left = `${newLeft}px`;
     }
 });
 
 document.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+document.addEventListener('mousedown', (e) => {
+    if (!gameOverFlag) {
+        isDragging = true;
+        dragStartX = e.clientX - gameCharacter.getBoundingClientRect().left;
+    }
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        let newLeft = e.clientX - dragStartX;
+        newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - gameCharacter.offsetWidth)); // Ensure character stays within the screen
+        gameCharacter.style.left = `${newLeft}px`;
+    }
+});
+
+document.addEventListener('mouseup', () => {
     isDragging = false;
 });
 
