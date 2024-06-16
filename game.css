@@ -141,43 +141,6 @@ body {
     background-color: #ddd;
 }
 
-#player-name {
-    font-size: 3vw; /* Responsive font size */
-    padding: 10px;
-    width: 100%; /* Adjust width to fit smaller screens */
-    margin-bottom: 10px;
-    box-sizing: border-box; /* Ensure padding is included in the input's total width */
-}
-
-#leaderboard, #leaderboard-gameover, #countdown {
-    margin-top: 20px;
-}
-
-#leaderboard li, #leaderboard-gameover li {
-    list-style: none;
-    margin-bottom: 10px;
-    font-size: 3vw; /* Responsive font size */
-}
-
 #countdown {
     margin-top: 20px;
-}
-
-/* Additional styles for the "Website" button */
-#website-button-start, #website-button {
-    display: block;
-    margin: 5px 0; /* Adjust margin to keep buttons within the frame */
-    padding: 10px 20px;
-    font-size: 3vw; /* Responsive font size */
-    font-family: 'Press Start 2P', cursive;
-    cursor: pointer;
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    text-shadow: none;
-    box-sizing: border-box; /* Ensure padding and border are included in the button's total width and height */
-}
-
-#website-button-start:hover, #website-button:hover {
-    background-color: #ddd;
 }

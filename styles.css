@@ -95,7 +95,7 @@ body {
 
 .button {
     position: fixed;
-    left: 10px;
+    left: 50px; /* Move buttons to the right to leave space for the contract address */
     color: rgba(255,255,0,1);
     font-family: 'Karma', serif;
     font-size: 16px;
@@ -181,6 +181,7 @@ body {
     .button {
         font-size: 14px;
         padding: 4px 8px;
+        left: 20px; /* Adjust button position for smaller screens */
     }
 
     #contract-address {

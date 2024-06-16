@@ -16,7 +16,6 @@ const db = firebase.firestore();
 
 const gameContainer = document.getElementById('game-container');
 const startMenu = document.getElementById('start-menu');
-const playerNameInput = document.getElementById('player-name');
 const startGameButton = document.getElementById('start-game-button');
 const gameCharacter = document.getElementById('game-character');
 const scoreDisplay = document.getElementById('score');
@@ -28,13 +27,10 @@ const trendingSound = document.getElementById('trending-sound');
 const spamSound = document.getElementById('spam-sound');
 const gameOverSound = document.getElementById('game-over-sound');
 const gameOverMenu = document.getElementById('game-over-menu');
+const finalScoreDisplay = document.getElementById('final-score');
 const restartButton = document.getElementById('restart-button');
 const websiteButton = document.getElementById('website-button');
 const websiteButtonStart = document.getElementById('website-button-start');
-const leaderboardButton = document.getElementById('leaderboard-button');
-const leaderboard = document.getElementById('leaderboard');
-const leaderboardGameover = document.getElementById('leaderboard-gameover');
-const countdown = document.getElementById('countdown');
 const gradientBg = document.querySelector('.gradient-bg');
 
 let score = 0;
@@ -43,9 +39,6 @@ let isDragging = false;
 let dragStartX = 0;
 let shieldActive = false;
 let gameOverFlag = false;
-let playerName = '';
-let playerId = localStorage.getItem('playerId') || generateId();
-let leaderboardData = [];
 let difficultyLevel = 1;
 let fallingInterval = 1000;
 
@@ -67,10 +60,8 @@ function gameOver() {
         gameOverFlag = true;
         backgroundMusic.pause();
         playSound(gameOverSound);
-        updateLeaderboard();
-        displayLeaderboard(leaderboardGameover);
+        finalScoreDisplay.textContent = `Your Score: ${score}`;
         gameOverMenu.style.display = 'flex';
-        startCountdown();
     }
 }
 
@@ -194,7 +185,20 @@ document.addEventListener('mouseup', () => {
 });
 
 restartButton.addEventListener('click', () => {
-    location.reload();
+    score = 0;
+    lives = 3;
+    gameOverFlag = false;
+    difficultyLevel = 1;
+    fallingInterval = 1000;
+    gameOverMenu.style.display = 'none';
+    gameCharacter.style.display = 'block';
+    scoreDisplay.style.display = 'block';
+    livesDisplay.style.display = 'block';
+    gradientBg.style.display = 'none';
+    updateLives(0);  // Reset lives display
+    updateScore(0);  // Reset score display
+    startFallingObjects();
+    startDifficultyTimer();
 });
 
 websiteButton.addEventListener('click', () => {
@@ -205,117 +209,19 @@ websiteButtonStart.addEventListener('click', () => {
     window.location.href = 'index.html';
 });
 
-leaderboardButton.addEventListener('click', () => {
-    displayLeaderboard(leaderboard);
-    leaderboard.style.display = leaderboard.style.display === 'none' ? 'block' : 'none';
-});
-
 startGameButton.addEventListener('click', () => {
-    playerName = playerNameInput.value.trim();
-    if (playerName && playerName.length <= 10 && !isNameDuplicate(playerName)) {
-        startMenu.style.display = 'none';
-        gameCharacter.style.display = 'block';
-        scoreDisplay.style.display = 'block';
-        livesDisplay.style.display = 'block';
-        startFallingObjects();
-        startDifficultyTimer();
-        updateLives(0);  // Initialize lives display
-        updateScore(0);  // Initialize score display
-    } else {
-        alert(playerName ? 'Name already exists or is too long. Please choose another name.' : 'Please enter your name.');
-    }
+    startMenu.style.display = 'none';
+    gameCharacter.style.display = 'block';
+    scoreDisplay.style.display = 'block';
+    livesDisplay.style.display = 'block';
+    startFallingObjects();
+    startDifficultyTimer();
+    updateLives(0);  // Initialize lives display
+    updateScore(0);  // Initialize score display
 });
-
-function updateLeaderboard() {
-    db.collection('leaderboard').add({
-        name: playerName,
-        score: score,
-        id: playerId,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        fetchLeaderboard();
-    }).catch((error) => {
-        console.error("Error writing leaderboard data: ", error);
-    });
-}
-
-function fetchLeaderboard() {
-    db.collection('leaderboard').orderBy('score', 'desc').limit(5).get().then((querySnapshot) => {
-        leaderboardData = [];
-        querySnapshot.forEach((doc) => {
-            leaderboardData.push(doc.data());
-        });
-        displayLeaderboard(leaderboard);
-        displayLeaderboard(leaderboardGameover);
-    }).catch((error) => {
-        console.error("Error fetching leaderboard data: ", error);
-    });
-}
-
-function displayLeaderboard(element) {
-    element.innerHTML = '';
-    leaderboardData.forEach((entry) => {
-        const li = document.createElement('li');
-        li.textContent = `${entry.score} ${entry.name}`;
-        element.appendChild(li);
-    });
-}
-
-function resetLeaderboard() {
-    const now = new Date();
-    const lastReset = localStorage.getItem('lastReset');
-    if (!lastReset || now - new Date(lastReset) > 24 * 60 * 60 * 1000) {
-        localStorage.setItem('lastReset', now);
-        db.collection('leaderboard').get().then((querySnapshot) => {
-            const batch = db.batch();
-            querySnapshot.forEach((doc) => {
-                batch.delete(doc.ref);
-            });
-            return batch.commit();
-        }).then(() => {
-            leaderboardData = [];
-            displayLeaderboard(leaderboard);
-            displayLeaderboard(leaderboardGameover);
-        }).catch((error) => {
-            console.error("Error resetting leaderboard: ", error);
-        });
-    } else {
-        fetchLeaderboard();
-    }
-}
-
-function isNameDuplicate(name) {
-    const existingEntry = leaderboardData.find(entry => entry.name === name);
-    return existingEntry && existingEntry.id !== playerId;
-}
-
-function startCountdown() {
-    const nextReset = new Date(localStorage.getItem('lastReset'));
-    nextReset.setDate(nextReset.getDate() + 1);
-
-    function updateCountdown() {
-        const now = new Date();
-        const timeDiff = nextReset - now;
-        if (timeDiff <= 0) {
-            resetLeaderboard();
-            return;
-        }
-        const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-        countdown.textContent = `Next leaderboard reset in: ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
 
 function generateId() {
     const id = '_' + Math.random().toString(36).substr(2, 9);
     localStorage.setItem('playerId', id);
     return id;
 }
-
-resetLeaderboard();
-startCountdown();
-fetchLeaderboard();
