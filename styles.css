@@ -95,11 +95,10 @@ body {
 
 .button {
     position: fixed;
-    left: 20px;
-    top: 80px; /* Adjust to match the position */
+    left: 10px;
     color: rgba(255,255,0,1);
     font-family: 'Karma', serif;
-    font-size: 24px;
+    font-size: 16px;
     text-decoration: none;
     border: 2px solid rgba(255,255,0,1);
     padding: 5px 10px;
@@ -112,13 +111,21 @@ body {
 }
 
 #telegram-button {
-    top: 20px;
+    top: 10px;
+}
+
+#start-trending-button {
+    top: 50px; /* Adjust to match the position */
+}
+
+#stop-trending-button {
+    top: 70px; /* Bring closer to the start-trending button */
 }
 
 #contract-container {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 10px;
+    left: 10px;
     height: calc(100% - 140px); /* Account for spacing and buttons */
     overflow: hidden;
     z-index: 1000;
@@ -127,7 +134,7 @@ body {
 #contract-address {
     color: rgba(255,255,0,1);
     font-family: 'Karma', serif;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
@@ -150,7 +157,7 @@ body {
     max-width: 200px;
     color: rgba(255,255,0,1); /* Yellow color */
     font-family: 'Karma', serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5;
     transform: translateY(-50%);
     z-index: 2; /* Ensure it's below the character */
@@ -174,15 +181,16 @@ body {
     }
 
     .button {
-        font-size: 24px;
+        font-size: 14px;
+        padding: 4px 8px;
     }
 
     #contract-address {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .chat-container {
-        font-size: 18px;
+        font-size: 14px;
         max-width: 90%;
     }
 }
