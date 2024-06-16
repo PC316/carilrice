@@ -115,19 +115,17 @@ body {
 }
 
 #start-trending-button {
-    top: 50px; /* Adjust to match the position */
+    top: 40px; /* Reduce space to bring closer to the TELEGRAM button */
 }
 
 #stop-trending-button {
-    top: 70px; /* Bring closer to the start-trending button */
+    top: 70px; /* Ensure the stop-trending button is close to the start-trending button */
 }
 
 #contract-container {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    height: calc(100% - 140px); /* Account for spacing and buttons */
-    overflow: hidden;
     z-index: 1000;
 }
 
